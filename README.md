@@ -2,6 +2,7 @@ moist-berry
 ===========
 
 Irrigation project with Arduino and Raspberry Pi
+Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_brnd.pdf
 
 ## Setting up Raspberry Pi for Arduino
     sudo apt-get update
