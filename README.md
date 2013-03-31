@@ -6,14 +6,15 @@ Irrigation project with Arduino and Raspberry Pi.
 
 ## Setting up Raspberry Pi for Arduino
 
-### Enabling remote login to the Raspberry.
-
-    sudo /etc/init.d/ssh start
-
 ### Updating Raspberry
 
     sudo apt-get update
     sudo apt-get install arduino
+
+### Enabling remote login to the Raspberry.
+
+    sudo apt-get install ssh
+    sudo /etc/init.d/ssh start
 
 ### Accessing Arduino via Serial from Python    
 Install pySerial from http://pyserial.sourceforge.net/
