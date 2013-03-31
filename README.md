@@ -9,7 +9,7 @@ Irrigation project with Arduino and Raspberry Pi.
     sudo apt-get install arduino
     
 ## Accessing Arduino via Serial from Python    
-http://pyserial.sourceforge.net/
+Install pySerial from http://pyserial.sourceforge.net/
 
     python setup.py install
 
@@ -20,3 +20,7 @@ http://playground.arduino.cc/interfacing/python
     ser.readline()
     ser.write('5')
     
+## Example Python code for Raspberry Pi side
+Posting data to web server.
+
+## Example code for Arduino
