@@ -22,6 +22,7 @@ http://playground.arduino.cc/interfacing/python
     
 ## Example Python code for Raspberry Pi side
 Posting data to web server.
+
     import httplib, urllib
     params = urllib.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
