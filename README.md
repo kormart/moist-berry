@@ -21,6 +21,10 @@ http://playground.arduino.cc/interfacing/python
     ser.write('5')
     
 ## Example Python code for Raspberry Pi side
+Enabling remote login to the Raspberry.
+
+    sudo /etc/init.d/ssh start
+
 Posting data to web server.
 
     import httplib, urllib
