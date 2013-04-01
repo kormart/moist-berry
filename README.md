@@ -17,14 +17,15 @@ Irrigation project with Arduino and Raspberry Pi.
     sudo /etc/init.d/ssh start
     cat ~/.ssh/id_rsa.pub | ssh pi@10.0.1.9 "mkdir .ssh;cat >> .ssh/authorized_keys"
     
-    sudo vi /etc/ssh/sshd_config
+    sudo nano /etc/ssh/sshd_config
     scroll down to the section that says #PasswordAuthentication yes
-    With the cursor over the # press x
-    Then scroll the console to the end and press i
-    Then press backspace to delete the word yes and replace it to no
-    Then press the escape key, press : and then w, then press : and then q
+
+    sudo nano /etc/rc.local
+    scroll down, before exit 0, add line 
+    /etc/init.d/ssh start
 
     sudo /etc/init.d/ssh restart
+    sudo reboot
 
 ### Accessing Arduino via Serial from Python    
 Install pySerial from http://pyserial.sourceforge.net/
