@@ -30,7 +30,7 @@ Irrigation project with Arduino and Raspberry Pi.
 ### Accessing Arduino via Serial from Python    
 Install pySerial from http://pyserial.sourceforge.net/
 
-    python setup.py install
+    sudo python setup.py install
 
 http://playground.arduino.cc/interfacing/python
 http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
@@ -44,7 +44,6 @@ http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
 First an example that sends time as query parameter.
 
     #!/usr/bin/python
-
     import time
     from time import localtime
     import httplib, urllib
@@ -66,6 +65,34 @@ First an example that sends time as query parameter.
 
       print '%s   %i:%i:%i'%(string, hour, minute, second)
       time.sleep(11)
+
+Second example that reads from Arduino
+    #!/usr/bin/python
+    import time
+    from time import localtime
+    import httplib, urllib
+    import serial
+    ser = serial.Serial('/dev/ttyACM0', 9600)
+
+    while 1:
+        time_now = localtime()
+        hour = time_now.tm_hour
+        minute = time_now.tm_min
+        second = time_now.tm_sec
+        string = str(hour) + ":" + str(minute) + ":" + str(second)
+        string2 = ser.readline()
+        
+    #    params = urllib.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})
+        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        conn = httplib.HTTPConnection("ec2-23-22-150-152.compute-1.amazonaws.com:8000")
+        conn.request("GET", "/test-page?name=" + string)
+        response = conn.getresponse()
+        print response.status, response.reason
+        data = response.read()
+        conn.close()
+        
+        print '%s  %s'%(string, string2)
+        time.sleep(5)
 
 ## Setting up Arduino
 Example Arduino code as is from Development Environment
@@ -91,35 +118,35 @@ Example Arduino code as is from Development Environment
  
       */
 
-// These constants won't change.  They're used to give names
-// to the pins used:
-const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
-const int analogOutPin = 9; // Analog output pin that the LED is attached to
+    // These constants won't change.  They're used to give names
+    // to the pins used:
+    const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
+    const int analogOutPin = 9; // Analog output pin that the LED is attached to
 
-int sensorValue = 0;        // value read from the pot
-int outputValue = 0;        // value output to the PWM (analog out)
+    int sensorValue = 0;        // value read from the pot
+    int outputValue = 0;        // value output to the PWM (analog out)
 
-void setup() {
-  // initialize serial communications at 9600 bps:
-  Serial.begin(9600); 
-}
+    void setup() {
+      // initialize serial communications at 9600 bps:
+      Serial.begin(9600); 
+    }
 
-void loop() {
-  // read the analog in value:
-  sensorValue = analogRead(analogInPin);            
-  // map it to the range of the analog out:
-  outputValue = map(sensorValue, 0, 1023, 0, 255);  
-  // change the analog out value:
-  analogWrite(analogOutPin, outputValue);           
+    void loop() {
+      // read the analog in value:
+      sensorValue = analogRead(analogInPin);            
+      // map it to the range of the analog out:
+      outputValue = map(sensorValue, 0, 1023, 0, 255);  
+      // change the analog out value:
+      analogWrite(analogOutPin, outputValue);           
 
-  // print the results to the serial monitor:
-  Serial.print("sensor = " );                       
-  Serial.print(sensorValue);      
-  Serial.print("\t output = ");      
-  Serial.println(outputValue);   
+      // print the results to the serial monitor:
+      Serial.print("sensor = " );                        
+      Serial.print(sensorValue);      
+      Serial.print("\t output = ");      
+      Serial.println(outputValue);    
 
-  // wait 2 milliseconds before the next loop
-  // for the analog-to-digital converter to settle
-  // after the last reading:
-  delay(2);                     
-}
+      // wait 2 milliseconds before the next loop
+      // for the analog-to-digital converter to settle
+      // after the last reading:
+      delay(2);                     
+    }
