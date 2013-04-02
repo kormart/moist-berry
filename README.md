@@ -96,6 +96,7 @@ Second example that reads from Arduino
         time.sleep(5)
 
 ## Setting up Arduino
+http://seeedstudio.com/wiki/Relay_Shield_V2.0
 Example Arduino code as is from Development Environment
 
      /*
