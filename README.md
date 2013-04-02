@@ -67,6 +67,7 @@ First an example that sends time as query parameter.
       time.sleep(11)
 
 Second example that reads from Arduino
+
     #!/usr/bin/python
     import time
     from time import localtime
