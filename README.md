@@ -33,22 +33,37 @@ Install pySerial from http://pyserial.sourceforge.net/
     python setup.py install
 
 http://playground.arduino.cc/interfacing/python
+http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
 
     import serial
-    ser = serial.Serial('/dev/tty.usbserial', 9600)
+    ser = serial.Serial('/dev/ttyACM0', 9600)
     ser.readline()
     ser.write('5')
     
 ### Posting data to web server.
 
+    #!/usr/bin/python
+
+    import time
+    from time import localtime
     import httplib, urllib
-    params = urllib.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})
-    headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-    conn = httplib.HTTPConnection("musi-cal.mojam.com:80")
-    conn.request("POST", "/cgi-bin/query", params, headers)
-    response = conn.getresponse()
-    print response.status, response.reason
-    data = response.read()
-    conn.close()
+
+    while 1:
+      time_now = localtime()
+      hour = time_now.tm_hour
+      minute = time_now.tm_min
+      second = time_now.tm_sec
+      string = str(hour) + ":" + str(minute) + ":" + str(second)
+
+      headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+      conn = httplib.HTTPConnection("ec2-23-22-150-152.compute-1.amazonaws.com:8000")
+      conn.request("GET", "/test-page?name=" + string)
+      response = conn.getresponse()
+      print response.status, response.reason
+      data = response.read()
+      conn.close()
+
+      print '%s   %i:%i:%i'%(string, hour, minute, second)
+      time.sleep(11)
 
 ## Setting up Arduino
