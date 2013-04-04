@@ -39,38 +39,13 @@ Install pySerial from http://pyserial.sourceforge.net/
 http://playground.arduino.cc/interfacing/python
 http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
 
+    python
     import serial
     ser = serial.Serial('/dev/ttyACM0', 9600)
     ser.readline()
     ser.write('5')
     
 ### Posting data to web server.
-First an example that sends time as query parameter.
-
-    #!/usr/bin/python
-    import time
-    from time import localtime
-    import httplib, urllib
-
-    while 1:
-      time_now = localtime()
-      hour = time_now.tm_hour
-      minute = time_now.tm_min
-      second = time_now.tm_sec
-      string = str(hour) + ":" + str(minute) + ":" + str(second)
-
-      headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-      conn = httplib.HTTPConnection("your_ec2_ip.compute-1.amazonaws.com:8000")
-      conn.request("GET", "/test-page?name=" + string)
-      response = conn.getresponse()
-      print response.status, response.reason
-      data = response.read()
-      conn.close()
-
-      print '%s   %i:%i:%i'%(string, hour, minute, second)
-      time.sleep(11)
-
-Second example that reads from Arduino
 
     #!/usr/bin/python
     import time
@@ -84,20 +59,18 @@ Second example that reads from Arduino
         hour = time_now.tm_hour
         minute = time_now.tm_min
         second = time_now.tm_sec
-        string = str(hour) + ":" + str(minute) + ":" + str(second)
-        string2 = ser.readline()
+        string = str(hour) + ":" + str(minute) + ":" + str(second) + ser.readline()
         
-    #    params = urllib.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn = httplib.HTTPConnection("ec2-23-22-150-152.compute-1.amazonaws.com:8000")
+        conn = httplib.HTTPConnection("ec2-your-server.compute-1.amazonaws.com:8000")
         conn.request("GET", "/test-page?name=" + string)
         response = conn.getresponse()
-        print response.status, response.reason
+    #    print response.status, response.reason
         data = response.read()
         conn.close()
         
-        print '%s  %s'%(string, string2)
-        time.sleep(5)
+    #    print '%s'%(string)
+        time.sleep(25)
 
 ## Setting up Arduino
 http://seeedstudio.com/wiki/Relay_Shield_V2.0
