@@ -142,3 +142,11 @@ Using the Relay Shield http://seeedstudio.com/wiki/Relay_Shield_V2.0
       // wait 200 milliseconds before the next loop
       delay(200);                     
     }
+
+### Running it
+Raspberry Pi
+    sudo python time-post5.py &
+
+Amazon
+    node server_mod.js
+    
