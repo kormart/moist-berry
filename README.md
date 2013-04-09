@@ -59,6 +59,10 @@ Makefile like this:
     ARDUINO_LIBS =
     include /usr/share/arduino/Arduino.mk
 
+Loading
+
+    make upload
+
 ### Posting data to web server.
 
     #!/usr/bin/python
@@ -145,8 +149,10 @@ Using the Relay Shield http://seeedstudio.com/wiki/Relay_Shield_V2.0
 
 ### Running it
 Raspberry Pi
+
     sudo python time-post5.py &
 
 Amazon
+
     node server_mod.js
     
