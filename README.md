@@ -45,6 +45,20 @@ http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
     ser.readline()
     ser.write('5')
     
+### Loading Arduino sketches from Raspberry Pi command line
+http://www.jamesrobertson.eu/blog/2012/sep/20/uploading-a-sketch-from-the-comman.html
+
+    sudo apt-get install arduino
+    sudo apt-get install arduino-mk
+
+Makefile like this:
+
+    ARDUINO_DIR = /usr/share/arduino
+    BOARD_TAG    = uno
+    ARDUINO_PORT = /dev/ttyACM0
+    ARDUINO_LIBS =
+    include /usr/share/arduino/Arduino.mk
+
 ### Posting data to web server.
 
     #!/usr/bin/python
@@ -72,10 +86,9 @@ http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
     #    print '%s'%(string)
         time.sleep(25)
 
-## Setting up Arduino
-http://seeedstudio.com/wiki/Relay_Shield_V2.0
+## Arduino sketch for water pump control
+Using the Relay Shield http://seeedstudio.com/wiki/Relay_Shield_V2.0
 
-    Example Arduino code as is from Development Environment
     /*
      Prototype Water pump control using Seeedstudio Relay Shield v2.0   
       
