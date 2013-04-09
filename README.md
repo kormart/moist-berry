@@ -68,7 +68,7 @@ Loading
     #!/usr/bin/python
     import time
     from time import localtime
-    import httplib, urllib
+    import httplib, urllib, socket
     import serial
     ser = serial.Serial('/dev/ttyACM0', 9600)
 
@@ -80,14 +80,16 @@ Loading
         string = str(hour) + ":" + str(minute) + ":" + str(second) + ser.readline()
         
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn = httplib.HTTPConnection("ec2-your-server.compute-1.amazonaws.com:8000")
-        conn.request("GET", "/test-page?name=" + string)
-        response = conn.getresponse()
-    #    print response.status, response.reason
-        data = response.read()
-        conn.close()
-        
-    #    print '%s'%(string)
+        try:
+           conn = httplib.HTTPConnection("ec2-your-server.compute-1.amazonaws.com:8000")
+           conn.request("GET", "/test-page?name=" + string)
+           response = conn.getresponse()
+    # print response.status, response.reason
+           data = response.read()
+           conn.close()
+        except (httplib.HTTPException, socket.error) as ex:
+           print "Error: %s" % ex        
+    # print '%s'%(string)
         time.sleep(25)
 
 ## Arduino sketch for water pump control
