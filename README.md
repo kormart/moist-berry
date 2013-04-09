@@ -93,7 +93,9 @@ Loading
         time.sleep(25)
 
 ## Arduino sketch for water pump control
-Using the Relay Shield http://seeedstudio.com/wiki/Relay_Shield_V2.0
+Using the Relay Shield: http://seeedstudio.com/wiki/Relay_Shield_V2.0
+
+Going to use the Time library: http://playground.arduino.cc/Code/time
 
     /*
      Prototype Water pump control using Seeedstudio Relay Shield v2.0   
