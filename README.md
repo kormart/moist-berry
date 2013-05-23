@@ -10,6 +10,12 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 
 ## Setting up Raspberry Pi for Arduino
 
+### Creating SD card for Raspberry
+Following http://elinux.org/RPi_Easy_SD_Card_Setup
+
+    diskutil unmountDisk /dev/disk2
+    sudo dd bs=1m if=<wheezy image file> of=/dev/disk2
+
 ### Updating Raspberry
 
     sudo apt-get update
