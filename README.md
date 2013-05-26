@@ -8,8 +8,9 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 2013-04 First version operational during springbreak vacation
 2013-05 Second version under test (
 To do list
+- [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles
 - [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino
-- [ ] Webcam for visual monitoring
+- [ ] Webcam for visual monitoring
 - [ ] Monitoring functions
 
 ## Setting up Raspberry Pi for Arduino
@@ -43,12 +44,31 @@ Following http://elinux.org/RPi_Easy_SD_Card_Setup
 
 ### Raspberry Pi Webcam server
 http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles
+This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black
+
+    sudo apt-get install motion
+    sudo apt-get install libv4l-0
+    sudo apt-get install uvccapture
+    sudo nano /etc/default/motion
+    sudo nano /etc/motion/motion.conf
+    sudo chmod 777 /media
+    sudo /etc/init.d/motion start
+    tail -f /var/log/syslog
+    dmesg | tail
+    sudo /etc/init.d/motion stop
+    du -h /tmp/motion/
+    
 
 ### Loading Arduino sketches from Raspberry Pi command line
 http://www.jamesrobertson.eu/blog/2012/sep/20/uploading-a-sketch-from-the-comman.html
+Only arduino-mk is needed if you only want to compile and upload
+
+    sudo apt-get install arduino-mk
+
+If you want to do more stuff I guess you can do this, but I don't know exactly the difference
 
     sudo apt-get install arduino
-    sudo apt-get install arduino-mk
+
 
 Makefile like this:
 
@@ -58,24 +78,38 @@ Makefile like this:
     ARDUINO_LIBS = /usr/share/arduino/libraries/
     include /usr/share/arduino/Arduino.mk
 
-Loading
+Compile the .ino file in the directory and upload to Arduino
 
     make upload
 
-### Accessing Arduino via Serial from Python    
+### Send/receive data between Arduino and R-Pi Python via Serial
 Install pySerial from http://pyserial.sourceforge.net/
 
+    tar xf pyserial-2.6.tar 
+    cd pyserial-2.6
     sudo python setup.py install
 
 http://playground.arduino.cc/interfacing/python
 http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
 
-    python
+    #!/usr/bin/python
     import serial
     ser = serial.Serial('/dev/ttyACM0', 9600)
     ser.readline()
     ser.write('5')
     
+Strings are sent as ASCII code on Serial line, so when picking it up on Arduino side, you can do
+
+    char mode = 'e';
+    void setup() {
+      Serial.begin(9600);
+    }
+    void loop() {
+      if (Serial.available() > 0) {
+        mode = (char)Serial.read();
+      }
+    }
+
 ### Arduino time library
 http://playground.arduino.cc/Code/time
 
