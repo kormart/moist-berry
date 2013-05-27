@@ -5,13 +5,15 @@ Irrigation project with Arduino and Raspberry Pi.
 
 Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_brnd.pdf
 
-2013-04 First version operational during springbreak vacation
-2013-05 Second version under test (
+2013-04 First version operational during springbreak vacation  
+2013-05 Second version under test (Arduino sw r0.47 is stable, r0.5 introduces mode, )  
 To do list
 - [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles
 - [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino
 - [ ] Webcam for visual monitoring
-- [ ] Monitoring functions
+- [ ] Monitoring functions  
+
+Modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
 
 ## Setting up Raspberry Pi for Arduino
 
@@ -43,7 +45,7 @@ Following http://elinux.org/RPi_Easy_SD_Card_Setup
     sudo reboot
 
 ### Raspberry Pi Webcam server
-http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles
+http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles  
 This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black
 
     sudo apt-get install motion
@@ -59,8 +61,8 @@ This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black
     du -h /tmp/motion/
     
 
-### Loading Arduino sketches from Raspberry Pi command line
-http://www.jamesrobertson.eu/blog/2012/sep/20/uploading-a-sketch-from-the-comman.html
+### Compiling and uploading Arduino code from Raspberry Pi command line
+http://www.jamesrobertson.eu/blog/2012/sep/20/uploading-a-sketch-from-the-comman.html  
 Only arduino-mk is needed if you only want to compile and upload
 
     sudo apt-get install arduino-mk
@@ -89,7 +91,7 @@ Install pySerial from http://pyserial.sourceforge.net/
     cd pyserial-2.6
     sudo python setup.py install
 
-http://playground.arduino.cc/interfacing/python
+http://playground.arduino.cc/interfacing/python  
 http://www.doctormonk.com/2012/04/raspberry-pi-and-arduino.html
 
     #!/usr/bin/python
@@ -143,8 +145,7 @@ http://playground.arduino.cc/Code/time
         time.sleep(25)
 
 ## Arduino sketch for water pump control
-Using the Relay Shield: http://seeedstudio.com/wiki/Relay_Shield_V2.0
-
+Using the Relay Shield: http://seeedstudio.com/wiki/Relay_Shield_V2.0  
 Going to use the Time library: http://playground.arduino.cc/Code/time
 
     /*
