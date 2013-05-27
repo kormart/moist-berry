@@ -9,7 +9,7 @@ import requests
 while 1:
     time.sleep(30)
     try:
-        url = 'http://ec2-23-22-150-152.compute-1.amazonaws.com:3000/upload'
+        url = 'http://<your_vm>.compute-1.amazonaws.com:3000/upload'
         files = {'file': ('lastsnap.jpg', open('/tmp/motion/lastsnap.jpg', 'rb'))}
         response = requests.post(url, files=files)
 #   print response.status_code, response.text

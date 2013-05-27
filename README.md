@@ -45,8 +45,14 @@ Following http://elinux.org/RPi_Easy_SD_Card_Setup
     sudo reboot
 
 ### Raspberry Pi Webcam server
+This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black   
+I have problems with the Motion software, trying fswebcam instead
+
+    sudo apt-get install fswebcam
+    fswebcam -r 640x480 -S 15 --jpeg 95 --shadow --title "Moist-Berry" --subtitle "" --timestamp "%Y-%m-%d %H:%M" --save lastsnap.jpg -q -l 60
+
+But the Motion software is great, if it only worked.   
 http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles  
-This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black
 
     sudo apt-get install motion
     sudo apt-get install libv4l-0
