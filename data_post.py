@@ -26,7 +26,7 @@ while 1:
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 
     try:
-       conn = httplib.HTTPConnection("<your_vm>.compute-1.amazonaws.com:8000")
+       conn = httplib.HTTPConnection("ec2-23-22-150-152.compute-1.amazonaws.com:8000")
        conn.request("GET", "/test-page?name=" + string)
        response = conn.getresponse()
 #       print response.status
