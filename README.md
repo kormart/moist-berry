@@ -8,9 +8,9 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 2013-04 First version operational during springbreak vacation  
 2013-05 Second version under test (Arduino sw r0.47 is stable, r0.5 introduces mode, )  
 To do list
-- [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles
-- [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino
-- [ ] Webcam for visual monitoring
+- [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles. Mitigated by using Pump 0 directly.  
+- [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino. Almost done.  
+- [ ] Webcam for visual monitoring. Done.  
 - [ ] Monitoring functions  
 
 Modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
@@ -59,7 +59,42 @@ This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black
     dmesg | tail
     sudo /etc/init.d/motion stop
     du -h /tmp/motion/
-    
+
+Uploading image files. Trying out the 'requests' module for Python.   
+http://docs.python-requests.org/en/latest/
+
+    curl -OL https://github.com/kennethreitz/requests/tarball/master
+    python setup.py install
+    mv master requests.tar.gz
+    gunzip requests.tar.gz
+    tar xf requests.tar
+    cd kennethreitz-requests-3bb13f8/
+    sudo python setup.py install
+
+Python code to POST image file
+
+    url = 'http://<your server>.compute-1.amazonaws.com:3000/upload'
+    files = {'file': ('latest.jpg', open('latest.jpg', 'rb'))}
+    response = requests.post(url, files=files)
+
+Receiving on the Express side
+
+    app.use(express.bodyParser({uploadDir:'./uploads'}));
+    app.post('/upload', function(req, res) {
+      // get the temporary location of the file
+      var tmp_path = req.files.file.path;
+      // set where the file should actually exists - in this case it is in the "images" directory
+      var target_path = './public/images/' + req.files.file.name;
+      // move the file from the temporary location to the intended location
+      fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+          if (err) throw err;
+          res.send('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes');
+        });
+      });
+    });
 
 ### Compiling and uploading Arduino code from Raspberry Pi command line
 http://www.jamesrobertson.eu/blog/2012/sep/20/uploading-a-sketch-from-the-comman.html  
