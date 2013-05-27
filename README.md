@@ -10,7 +10,7 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 To do list
 - [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles. Mitigated by using Pump 0 directly.  
 - [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino. Almost done.  
-- [ ] Webcam for visual monitoring. Done.  
+- [ ] Webcam for visual monitoring. Problems with stability of Webcom USB connection to Motion server; tried turning off stuff and chaing port numbers.  
 - [ ] Monitoring functions  
 
 Modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
@@ -23,10 +23,10 @@ Following http://elinux.org/RPi_Easy_SD_Card_Setup
     diskutil unmountDisk /dev/disk2
     sudo dd bs=1m if=<wheezy image file> of=/dev/disk2
 
-### Updating Raspberry
+### Updating Raspberry and installing git
 
     sudo apt-get update
-    sudo apt-get install arduino
+    sudo apt-get install git-core
 
 ### Enabling remote login to the Raspberry.
 
@@ -237,6 +237,11 @@ Going to use the Time library: http://playground.arduino.cc/Code/time
       delay(200);                     
     }
 
+### Running MongoDb on EC2
+Sometimes cleaning old data
+
+    db.users.remove( { "time": { $lt: "140" } } )
+    
 ### Running it
 Raspberry Pi
 
