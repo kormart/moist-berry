@@ -15,8 +15,8 @@ const int relay1Pin = 7; // the pin to use for relay control
 const int relay2Pin = 6; // the pin to use for relay control
 const int pump0DelayTime = 25;
 const int pump1StartHour = 0;
-const int pump1StartMinute = 1;
-const int pump1OnMinutes = 12;
+const int pump1StartMinute = 2;
+const int pump1OnMinutes = 15;
 
 int levelState0 = 0;  // value read from level switch 0
 int levelState1 = 0;  // value read from level switch 1
@@ -112,7 +112,7 @@ void loop() {
         }
       }
     }
-    digitalWrite(relay2Pin, pump1On);
+    digitalWrite(relay1Pin, pump1On);
   }
 
   // Version 2: Turn on Pump 1 for 1 minute every 10 minutes
@@ -122,7 +122,7 @@ void loop() {
     if ((currentMinute >= 00 && currentMinute < 01) || (currentMinute >= 10 && currentMinute < 11) || (currentMinute >= 20 && currentMinute < 21) || (currentMinute >= 30 && currentMinute < 31) || (currentMinute >= 40 && currentMinute < 41) || (currentMinute >= 50 && currentMinute < 51) ) {
       pump1On = 1;
     }
-    digitalWrite(relay2Pin, pump1On);
+    digitalWrite(relay1Pin, pump1On);
   }
 
   // Version 3: Toggle Pump 1 using Level 1 switch
