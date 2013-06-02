@@ -5,6 +5,8 @@ import time
 from time import localtime
 import httplib, urllib, socket
 import serial
+import os
+
 def getLatestStatus():
     while ser.inWaiting() > 0:
         status = ser.readline()
@@ -12,9 +14,13 @@ def getLatestStatus():
 
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
+mode = "7"
 
 while 1:
-    ser.write('7')
+#    mode = os.getenv('MODE')
+#    print mode
+    ser.write(mode)
+    time.sleep(2)
     time_now = localtime()
     day = time_now.tm_yday
     hour = time_now.tm_hour
@@ -29,11 +35,11 @@ while 1:
        conn = httplib.HTTPConnection("ec2-23-22-150-152.compute-1.amazonaws.com:8000")
        conn.request("GET", "/test-page?name=" + string)
        response = conn.getresponse()
-#       print response.status
-       data = response.read()
+       mode = response.read()
+#       print data
        conn.close()
     except (httplib.HTTPException, socket.error) as ex:
        print "Error: %s" % ex
 #    print '%s:%s'%(string, string2)
-    time.sleep(60)
+    time.sleep(58)
    
