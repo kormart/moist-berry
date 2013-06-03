@@ -55,22 +55,22 @@ app.get('/mode', function(req,res) {
 });
 
 app.get('/time', function(req, res) {
-	res.write('Max=' + dataMoist0Max.toString() + ' Min=' + dataMoist0Min.toString() + '\n');
-	for (var i=0;i<length;i++)
-	{ 
-          res.write(JSON.stringify(dataObjectStore[(i+index)%length]) + '\n');
-	}
-	res.end()
+  var client = req.ip;
+  res.write('Max=' + dataMoist0Max.toString() + ' Min=' + dataMoist0Min.toString() + ' Mode= ' + mode + ' Views= ' + pageViewCounter + ' Client= ' + client + '\n');
+  for (var i=0;i<length;i++) { 
+    res.write(JSON.stringify(dataObjectStore[(i+index)%length]) + '\n');
+  }
+  res.end()
 });
 
 app.get('/data', function(req, res, next){
   pageViewCounter++;
+//  console.log("client= ", client);
   var data2 = [ ];
   User.count(function(err, count) {
     if (err) {
       return next(err);
     }
-//    console.log("count= ", count, "last= ", req.query.last);
     User.find({}, { _id: 0})
       .sort({"time": 1})
       .skip(count - req.query.last)
