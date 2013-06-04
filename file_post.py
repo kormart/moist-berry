@@ -1,9 +1,6 @@
 #!/usr/bin/python
 
-#import glob
 import time
-#from time import localtime
-#import httplib, urllib, socket
 import requests
 
 while 1:
