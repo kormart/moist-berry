@@ -7,13 +7,16 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 
 2013-04 First version operational during springbreak vacation  
 2013-05 Second version under test (Arduino sw r0.47 is stable, r0.5 introduces mode, )  
-To do list
-- [ ] Risk that pump 1 isn't powerful enough to drive water through nozzles. Mitigated by using Pump 0 directly.  
-- [ ] Choose watering algorithm using serial write of a "mode number" from R-Pi to Arduino. Almost done.  
-- [ ] Webcam for visual monitoring. Using fswebcam after problems with Motion.  
-- [ ] Monitoring functions  
 
-Modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
+Basic parts list:  
+Arduino, controlling water valve and measuring moisture and temperature  
+Webcam, Microsoft LifeCam Cinema 720p HD Webcam  
+Water valve, Rain Bird 3/4-Inch Sprinkler System Automatic In-Line Valve CP075
+Moisture sensors, 2 nails in the soil
+Raspberry Pi, relaying between Arduino and Web  
+Webserver, node.js/Express server running on Amazon with Mongodb  
+
+Operation modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
 
 ## Setting up Raspberry Pi for Arduino
 
