@@ -9,13 +9,13 @@ Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_
 2013-05 Second version under test (Arduino sw r0.47 is stable, r0.5 introduces mode, )  
 
 Basic parts list:  
-Arduino, controlling water valve and measuring moisture and temperature 
-Relay shield, SEEED Arduino Relay Shield V2.0
-Webcam, Microsoft LifeCam Cinema 720p HD Webcam  
-Water valve, Rain Bird 3/4-Inch Sprinkler System Automatic In-Line Valve CP075
-Moisture sensors, 2 nails in the soil
+Arduino, controlling water valve and measuring moisture and temperature  
+Relay shield, SEEED Arduino Relay Shield V2.0   
+Webcam, Microsoft LifeCam Cinema 720p HD Webcam   
+Water valve, Rain Bird 3/4-Inch Sprinkler System Automatic In-Line Valve CP075   
+Moisture sensors, 2 nails in the soil   
 Raspberry Pi, relaying between Arduino and Web  
-Webserver, node.js/Express server running on Amazon with Mongodb  
+Webserver, node.js/Express server running on Amazon with Mongodb, using Wijmo/JQuery/Jade as front-end  
 
 Operation modes: 5: Water once per day, 6: Water 1 minute every 10 minutes, 7: Water using level 1 switch
 
