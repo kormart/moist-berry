@@ -248,6 +248,7 @@ Going to use the Time library: http://playground.arduino.cc/Code/time
     }
 
 ### Running MongoDb on EC2
+Follow http://docs.mongodb.org/ecosystem/platforms/amazon-ec2/  
 Sometimes cleaning old data
 
     db.users.remove( { "time": { $lt: "140" } } )
