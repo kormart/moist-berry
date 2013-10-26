@@ -80,24 +80,8 @@ src="/img/top-nav-logo.png" width="130"></a>
     </div>
   </div><!-- /navbar-inner -->
 </div>
-
-<div style="" class="container-fluid">
-  <div class="row-fluid">
-    <div class="span1">
-      <!--Sidebar content-->
-      <p> <button type="button" class="btn btn-primary">5</button> </p>
-      <p> <button type="button" class="btn btn-primary">6</button> </p>
-      <p> <button type="button" class="btn btn-primary">7</button> </p>
-    </div>
-    <div class="span10">
-
-      <img src="img/sunflower.png" style="float-left" width=200>
-      <button style="float-right" type="button" class="btn btn-primary">Display 1 day</button> </p>
-      
-      <h2> Moisture </h2>
-
-      <script>
-
+<script>
+  function diagram_moist(last, every) {
       var margin = {top: 20, right: 20, bottom: 30, left: 180},
           width = 700 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
@@ -128,7 +112,8 @@ src="/img/top-nav-logo.png" width="130"></a>
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.json("data?last=300&every=30", function(error, data) {
+      var url = "data?last=" + last.toString() + "&every=" + every.toString();
+      d3.json(url, function(error, data) {
         data.forEach(function(d) {
           d.time = parseDate(d.time);
           d.m1 = +d.m1;
@@ -154,8 +139,25 @@ src="/img/top-nav-logo.png" width="130"></a>
             .attr("class", "line")
             .attr("d", line);
       });
+    }
+</script>
 
-      </script>
+<div style="" class="container-fluid">
+  <div class="row-fluid">
+    <div class="span1">
+      <!--Sidebar content-->
+      <p> <button type="button" class="btn btn-primary">5</button> </p>
+      <p> <button type="button" class="btn btn-primary">6</button> </p>
+      <p> <button type="button" class="btn btn-primary">7</button> </p>
+    </div>
+    <div class="span10">
+
+      <img src="img/sunflower.png" style="float-left" width=200>
+      <button style="float-right" type="button" class="btn btn-primary">Display 1 day</button> </p>
+      
+      <h2> Moisture </h2>
+
+      diagram_moist(300, 30);
 
     </div>
   </div>
