@@ -75,7 +75,7 @@ app.get('/data', function(req, res, next){
     mongo.dataCollection.find({}, { _id: 0})
       .sort({"time": 1})
       .skip(count - req.query.last)
-      .exec(function(err, data) {
+      .toArray(function(err, data) {
         if (err) {
           return next(err);
         }
