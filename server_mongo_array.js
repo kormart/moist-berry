@@ -79,15 +79,16 @@ app.get('/data', function(req, res, next){
         if (err) {
           return next(err);
         }
-//        console.log(JSON.stringify(data));
 //        data.forEach(function(item) {
         var items = parseInt (req.query.last / req.query.every);
         for (i=0; i < req.query.last/req.query.every; i++) {
           data2.push(data[(i+1)*req.query.every - 1]);
-          var number = parseInt( data2[i].ardtime.split(".")[2] );
-          data2[i].ardtime = number;
+//          var number = parseInt( data2[i].ardtime.split(".")[2] );
+//          data2[i].ardtime = number;
         }
+        console.log(JSON.stringify(data2));
         res.write(JSON.stringify(data2));
+        res.end("\n");
       });
   });
 });

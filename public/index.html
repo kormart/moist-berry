@@ -132,19 +132,22 @@ src="/img/top-nav-logo.png" width="130"></a>
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.json("http://ec2-54-226-199-225.compute-1.amazonaws.com:8000/data?last=50&every=2", function(error, data) {
+      d3.json("data?last=20&every=2", function(error, data) {
+	console.log("length:", data.length, "data:", JSON.stringify(data));
         data.forEach(function(d) {
           d.time = parseDate(d.time);
-          d.close = +d.m1;
+          d.m1 = +d.m1;
         });
+	console.log("length:", data.length, "data:", JSON.stringify(data));
 
         x.domain(d3.extent(data, function(d) { return d.time; }));
         y.domain(d3.extent(data, function(d) { return d.m1; }));
-
+	console.log("checkpoint 2");
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
+	console.log("checkpoint 3");
 
         svg.append("g")
             .attr("class", "y axis")
@@ -155,6 +158,7 @@ src="/img/top-nav-logo.png" width="130"></a>
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text("");
+	console.log("checkpoint 4");
 
         svg.append("path")
             .datum(data)
