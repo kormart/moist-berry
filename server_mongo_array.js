@@ -67,13 +67,12 @@ app.get('/time', function(req, res) {
 
 app.get('/data', function(req, res, next){
   pageViewCounter++;
-//  console.log("client= ", client);
   var data2 = [ ];
-  User.count(function(err, count) {
+  mongo.dataCollection.count(function(err, count) {
     if (err) {
       return next(err);
     }
-    User.find({}, { _id: 0})
+    mongo.dataCollection.find({}, { _id: 0})
       .sort({"time": 1})
       .skip(count - req.query.last)
       .exec(function(err, data) {
@@ -88,7 +87,7 @@ app.get('/data', function(req, res, next){
           var number = parseInt( data2[i].ardtime.split(".")[2] );
           data2[i].ardtime = number;
         }
-        res.render('index', {title: 'Moist-Berry', data: data2, mode: mode, views: pageViewCounter});
+        res.write(JSON.stringify(data2));
       });
   });
 });
