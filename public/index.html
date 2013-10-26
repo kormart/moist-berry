@@ -102,7 +102,7 @@ src="/img/top-nav-logo.png" width="130"></a>
 
       <script>
 
-      var margin = {top: 20, right: 20, bottom: 30, left: 170},
+      var margin = {top: 20, right: 20, bottom: 30, left: 180},
           width = 700 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom;
 
@@ -123,7 +123,7 @@ src="/img/top-nav-logo.png" width="130"></a>
           .orient("left");
 
       var line = d3.svg.line()
-          .x(function(d) { return x(d.date); })
+          .x(function(d) { return x(d.time); })
           .y(function(d) { return y(d.m1); });
 
       var svg = d3.select("body").append("svg")
@@ -132,23 +132,18 @@ src="/img/top-nav-logo.png" width="130"></a>
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      d3.json("data?last=20&every=2", function(error, data) {
-	console.log("length:", data.length, "data:", JSON.stringify(data));
+      d3.json("data?last=200&every=2", function(error, data) {
         data.forEach(function(d) {
           d.time = parseDate(d.time);
           d.m1 = +d.m1;
         });
-	console.log("length:", data.length, "data:", JSON.stringify(data));
 
         x.domain(d3.extent(data, function(d) { return d.time; }));
         y.domain(d3.extent(data, function(d) { return d.m1; }));
-	console.log("checkpoint 2");
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
-	console.log("checkpoint 3");
-
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
@@ -158,8 +153,6 @@ src="/img/top-nav-logo.png" width="130"></a>
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text("");
-	console.log("checkpoint 4");
-
         svg.append("path")
             .datum(data)
             .attr("class", "line")

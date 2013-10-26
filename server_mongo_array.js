@@ -86,9 +86,9 @@ app.get('/data', function(req, res, next){
 //          var number = parseInt( data2[i].ardtime.split(".")[2] );
 //          data2[i].ardtime = number;
         }
-        console.log(JSON.stringify(data2));
+//        console.log(JSON.stringify(data2));
         res.write(JSON.stringify(data2));
-        res.end("\n");
+        res.end();
       });
   });
 });
