@@ -82,132 +82,256 @@ src="/img/top-nav-logo.png" width="130"></a>
 </div>
 <script>
 
-  function diagram_moist(last, every) {
-      var margin = {top: 20, right: 20, bottom: 30, left: 180},
-          width = 700 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom;
+function diagram_moist(last, every) {
+    var margin = {top: 20, right: 20, bottom: 30, left: 180},
+        width = 700 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
-      var parseDate = d3.time.format("%j.%H.%M.%S").parse;
+    var parseDate = d3.time.format("%j.%H.%M.%S").parse;
 
-      var x = d3.time.scale()
-          .range([0, width]);
+    var x = d3.time.scale()
+        .range([0, width]);
 
-      var y = d3.scale.linear()
-          .range([height, 0]);
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-      var xAxis = d3.svg.axis()
-          .scale(x)
-          .orient("bottom");
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
 
-      var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient("left");
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
 
-      var line = d3.svg.line()
-          .interpolate("basis")
-          .x(function(d) { return x(d.time); })
-          .y(function(d) { return y(d.m1); });
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y(function(d) { return y(d.m1); });
 
-      var svg = d3.select("body").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      var url = "data?last=" + last.toString() + "&every=" + every.toString();
-      d3.json(url, function(error, data) {
-        data.forEach(function(d) {
-          d.time = parseDate(d.time);
-          d.m1 = +d.m1;
-        });
-
-        x.domain(d3.extent(data, function(d) { return d.time; }));
-        y.domain([300,520]); //d3.extent(data, function(d) { return d.m1; }));
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-          .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("");
-        svg.append("path")
-            .datum(data)
-            .attr("class", "line")
-            .attr("d", line);
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+        d.time = parseDate(d.time);
+        d.m1 = +d.m1;
       });
 
-      document.getElementById('one_day').onclick = function() {
-      var last=200;
-      var every=10;
-      // Get the data again
-      var url = "data?last=" + last.toString() + "&every=" + every.toString();
-      d3.json(url, function(error, data) {
-        data.forEach(function(d) {
-            d.time = parseDate(d.time);
-            d.m1 = +d.m1;
-        });
+      x.domain(d3.extent(data, function(d) { return d.time; }));
+      y.domain([300,520]); //d3.extent(data, function(d) { return d.m1; }));
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("");
+      svg.append("path")
+          .datum(data)
+          .attr("class", "line")
+          .attr("d", line);
+    });
 
-        // Scale the range of the data again 
-        x.domain(d3.extent(data, function(d) { return d.time; }));
-//        y.domain(d3.extent(data, function(d) { return d.m1; }));
+    document.getElementById('one_day').onclick = function() {
+    var last=200;
+    var every=10;
+    // Get the data again
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+          d.time = parseDate(d.time);
+          d.m1 = +d.m1;
+      });
+
+    // Scale the range of the data again 
+    x.domain(d3.extent(data, function(d) { return d.time; }));
+    // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select(".line")   // change the line
-            .duration(750)
-            .attr("d", line(data));
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".line")   // change the line
+        .duration(750)
+        .attr("d", line(data));
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
+
+  });
+ } // End of onclick one_day
+
+  document.getElementById('one_week').onclick = function() {
+    var last=600;
+    var every=20;
+    // Get the data again
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+          d.time = parseDate(d.time);
+          d.m1 = +d.m1;
+      });
+
+      // Scale the range of the data again 
+      x.domain(d3.extent(data, function(d) { return d.time; }));
+      // y.domain(d3.extent(data, function(d) { return d.m1; }));
+
+      // Select the section we want to apply our changes to
+      var svg = d3.select("body").transition();
+
+      // Make the changes
+      svg.select(".line")   // change the line
+          .duration(750)
+          .attr("d", line(data));
+      svg.select(".x.axis") // change the x axis
+          .duration(750)
+          .call(xAxis);
+      svg.select(".y.axis") // change the y axis
+          .duration(750)
+          .call(yAxis);
 
     });
-   } // End of onclick one_day
+  } // End of onclick one_week
+} // End of diagram_moist
 
-      document.getElementById('one_week').onclick = function() {
-      var last=500;
-      var every=25;
-      // Get the data again
-      var url = "data?last=" + last.toString() + "&every=" + every.toString();
-      d3.json(url, function(error, data) {
-        data.forEach(function(d) {
-            d.time = parseDate(d.time);
-            d.m1 = +d.m1;
-        });
+function diagram_moist(last, every) {
+    var margin = {top: 20, right: 20, bottom: 30, left: 180},
+        width = 700 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
-        // Scale the range of the data again 
-        x.domain(d3.extent(data, function(d) { return d.time; }));
-//        y.domain(d3.extent(data, function(d) { return d.m1; }));
+    var parseDate = d3.time.format("%j.%H.%M.%S").parse;
+
+    var x = d3.time.scale()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y(function(d) { return y(d.t); });
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+        d.time = parseDate(d.time);
+        d.t = +d.t;
+      });
+
+      x.domain(d3.extent(data, function(d) { return d.time; }));
+      y.domain([0,30]); //d3.extent(data, function(d) { return d.m1; }));
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("");
+      svg.append("path")
+          .datum(data)
+          .attr("class", "line")
+          .attr("d", line);
+    });
+
+    document.getElementById('one_day').onclick = function() {
+    var last=200;
+    var every=10;
+    // Get the data again
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+          d.time = parseDate(d.time);
+          d.t = +d.t;
+      });
+
+    // Scale the range of the data again 
+    x.domain(d3.extent(data, function(d) { return d.time; }));
+    // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select(".line")   // change the line
-            .duration(750)
-            .attr("d", line(data));
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".line")   // change the line
+        .duration(750)
+        .attr("d", line(data));
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
+
+  });
+ } // End of onclick one_day
+
+  document.getElementById('one_week').onclick = function() {
+    var last=600;
+    var every=20;
+    // Get the data again
+    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    d3.json(url, function(error, data) {
+      data.forEach(function(d) {
+          d.time = parseDate(d.time);
+          d.t = +d.t;
+      });
+
+      // Scale the range of the data again 
+      x.domain(d3.extent(data, function(d) { return d.time; }));
+      // y.domain(d3.extent(data, function(d) { return d.m1; }));
+
+      // Select the section we want to apply our changes to
+      var svg = d3.select("body").transition();
+
+      // Make the changes
+      svg.select(".line")   // change the line
+          .duration(750)
+          .attr("d", line(data));
+      svg.select(".x.axis") // change the x axis
+          .duration(750)
+          .call(xAxis);
+      svg.select(".y.axis") // change the y axis
+          .duration(750)
+          .call(yAxis);
 
     });
-   } // End of onclick one_week
+  } // End of onclick one_week
+} // End of diagram_temp
 
-
-}
 
 </script>
 
@@ -228,8 +352,10 @@ src="/img/top-nav-logo.png" width="130"></a>
       <button id="one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
       </p>
       <h2> Moisture </h2>
-
       <script> diagram_moist(400, 40); </script>
+
+      <h2> Temperature </h2>
+      <script> diagram_temp(400, 40); </script>
 
     </div>
   </div>
