@@ -122,7 +122,7 @@ src="/img/top-nav-logo.png" width="130"></a>
         });
 
         x.domain(d3.extent(data, function(d) { return d.time; }));
-        y.domain([0, d3.max(data, function(d) { return d.m1; })]);
+        y.domain([300,520]); //d3.extent(data, function(d) { return d.m1; }));
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -155,7 +155,7 @@ src="/img/top-nav-logo.png" width="130"></a>
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.time; }));
-        y.domain([0, d3.max(data, function(d) { return d.m1; })]);
+//        y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
@@ -175,8 +175,8 @@ src="/img/top-nav-logo.png" width="130"></a>
    } // End of onclick one_day
 
       document.getElementById('one_week').onclick = function() {
-      var last=400;
-      var every=20;
+      var last=500;
+      var every=25;
       // Get the data again
       var url = "data?last=" + last.toString() + "&every=" + every.toString();
       d3.json(url, function(error, data) {
@@ -187,7 +187,7 @@ src="/img/top-nav-logo.png" width="130"></a>
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.time; }));
-        y.domain([0, d3.max(data, function(d) { return d.m1; })]);
+//        y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
