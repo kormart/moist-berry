@@ -47,10 +47,10 @@
 src="/img/top-nav-logo.png" width="130"></a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li><a href="/App3_home">Home</a></li>
-            <li><a href="/App3_devices">Devices</a></li>
-            <li class="active"><a href="/App3_services">Services</a></li>
-            <li><a href="/App3_users">Users&Groups</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">Camera</a></li>
+            <li class="active"><a href="/">Sensors&Control</a></li>
+            <li><a href="/">Users&Groups</a></li>
             
           </ul>
 
@@ -108,7 +108,7 @@ function diagram_moist(last, every) {
         .x(function(d) { return x(d.time); })
         .y(function(d) { return y(d.m1); });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#area1").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -158,7 +158,7 @@ function diagram_moist(last, every) {
     // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
-    var svg = d3.select("body").transition();
+    var svg = d3.select("#area1").transition();
 
     // Make the changes
     svg.select(".line")   // change the line
@@ -190,7 +190,7 @@ function diagram_moist(last, every) {
       // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
       // Select the section we want to apply our changes to
-      var svg = d3.select("body").transition();
+      var svg = d3.select("#area1").transition();
 
       // Make the changes
       svg.select(".line")   // change the line
@@ -207,7 +207,7 @@ function diagram_moist(last, every) {
   } // End of onclick one_week
 } // End of diagram_moist
 
-function diagram_moist(last, every) {
+function diagram_temp(last, every) {
     var margin = {top: 20, right: 20, bottom: 30, left: 180},
         width = 700 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -233,7 +233,7 @@ function diagram_moist(last, every) {
         .x(function(d) { return x(d.time); })
         .y(function(d) { return y(d.t); });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#area2").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -283,7 +283,7 @@ function diagram_moist(last, every) {
     // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
     // Select the section we want to apply our changes to
-    var svg = d3.select("body").transition();
+    var svg = d3.select("#area2").transition();
 
     // Make the changes
     svg.select(".line")   // change the line
@@ -315,7 +315,7 @@ function diagram_moist(last, every) {
       // y.domain(d3.extent(data, function(d) { return d.m1; }));
 
       // Select the section we want to apply our changes to
-      var svg = d3.select("body").transition();
+      var svg = d3.select("#area2").transition();
 
       // Make the changes
       svg.select(".line")   // change the line
@@ -348,15 +348,17 @@ function diagram_moist(last, every) {
       <img src="img/sunflower.png" width=200>
       </p>
       <p>
-      <button id="one_day" type="button" class="btn btn-primary">Display 1 day</button> </p>
-      <button id="one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
+        <button id="one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
+        <button id="one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
       </p>
-      <h2> Moisture </h2>
-      <script> diagram_moist(400, 40); </script>
-
-      <h2> Temperature </h2>
-      <script> diagram_temp(400, 40); </script>
-
+      <div id="area1">
+        <h2> Moisture </h2>
+        <script> diagram_moist(400, 40); </script>
+      </div>
+      <div id="area2">
+        <h2> Temperature </h2>
+        <script> diagram_temp(400, 40); </script>
+      </div>
     </div>
   </div>
 </div>
