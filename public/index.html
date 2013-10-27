@@ -142,7 +142,7 @@ function diagram_moist(last, every) {
           .attr("d", line);
     });
 
-    document.getElementById('one_day').onclick = function() {
+    document.getElementById('moist_one_day').onclick = function() {
     var last=200;
     var every=10;
     // Get the data again
@@ -174,7 +174,7 @@ function diagram_moist(last, every) {
   });
  } // End of onclick one_day
 
-  document.getElementById('one_week').onclick = function() {
+  document.getElementById('moist_one_week').onclick = function() {
     var last=600;
     var every=20;
     // Get the data again
@@ -267,7 +267,7 @@ function diagram_temp(last, every) {
           .attr("d", line);
     });
 
-    document.getElementById('one_day').onclick = function() {
+    document.getElementById('temp_one_day').onclick = function() {
     var last=200;
     var every=10;
     // Get the data again
@@ -280,7 +280,7 @@ function diagram_temp(last, every) {
 
     // Scale the range of the data again 
     x.domain(d3.extent(data, function(d) { return d.time; }));
-    // y.domain(d3.extent(data, function(d) { return d.m1; }));
+    // y.domain(d3.extent(data, function(d) { return d.t; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("#area2").transition();
@@ -299,7 +299,7 @@ function diagram_temp(last, every) {
   });
  } // End of onclick one_day
 
-  document.getElementById('one_week').onclick = function() {
+  document.getElementById('temp_one_week').onclick = function() {
     var last=600;
     var every=20;
     // Get the data again
@@ -312,7 +312,7 @@ function diagram_temp(last, every) {
 
       // Scale the range of the data again 
       x.domain(d3.extent(data, function(d) { return d.time; }));
-      // y.domain(d3.extent(data, function(d) { return d.m1; }));
+      // y.domain(d3.extent(data, function(d) { return d.t; }));
 
       // Select the section we want to apply our changes to
       var svg = d3.select("#area2").transition();
@@ -347,17 +347,17 @@ function diagram_temp(last, every) {
       <p>
       <img src="img/sunflower.png" width=200>
       </p>
-      <p>
-        <button id="one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
-        <button id="one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-      </p>
       <div id="area1">
         <h2> Moisture </h2>
-        <script> diagram_moist(400, 40); </script>
+        <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
+        <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
+        <script> diagram_moist(600, 60); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
-        <script> diagram_temp(400, 40); </script>
+        <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
+        <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
+        <script> diagram_temp(600, 60); </script>
       </div>
     </div>
   </div>
