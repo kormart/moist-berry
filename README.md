@@ -158,7 +158,10 @@ Strings are sent as ASCII code on Serial line, so when picking it up on Arduino 
     }
 
 ### Arduino time library
-http://playground.arduino.cc/Code/time
+Following http://playground.arduino.cc/Code/time    
+Download http://playground.arduino.cc/uploads/Code/Time.zip
+and copy Time folder to /usr/share/arduino/libraries
+
 
 ### Posting data to web server.
 
