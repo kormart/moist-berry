@@ -16,7 +16,7 @@ const int relay2Pin = 6; // the pin to use for relay control
 const int pump0DelayTime = 25;
 const int pump1StartHour = 0;
 const int pump1StartMinute = 2;
-const int pump1OnMinutes = 15;
+const int pump1OnMinutes = 8;
 
 int levelState0 = 0;  // value read from level switch 0
 int levelState1 = 0;  // value read from level switch 1

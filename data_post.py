@@ -24,7 +24,7 @@ while 1:
     string = str(day) + "." + str(hour).zfill(2) + "." + str(minute).zfill(2) + "." + str(second).zfill(2) + ":" + getLatestStatus()
 
     try:
-       url = "http://ec2-54-226-199-225.compute-1.amazonaws.com:8000/test-page?name=" + string
+       url = "http://backabo.net:8000/test-page?name=" + string
        response = requests.get(url)
        mode = response.text
     except (requests.ConnectionError) as ex:
