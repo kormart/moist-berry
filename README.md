@@ -158,7 +158,10 @@ Strings are sent as ASCII code on Serial line, so when picking it up on Arduino 
     }
 
 ### Arduino time library
-http://playground.arduino.cc/Code/time
+Following http://playground.arduino.cc/Code/time    
+Download http://playground.arduino.cc/uploads/Code/Time.zip
+and copy Time folder to /usr/share/arduino/libraries
+
 
 ### Posting data to web server.
 
@@ -248,6 +251,7 @@ Going to use the Time library: http://playground.arduino.cc/Code/time
     }
 
 ### Running MongoDb on EC2
+Follow http://docs.mongodb.org/ecosystem/platforms/amazon-ec2/  
 Sometimes cleaning old data
 
     db.users.remove( { "time": { $lt: "140" } } )
