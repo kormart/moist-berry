@@ -5,6 +5,7 @@ Irrigation project with Arduino and Raspberry Pi.
 
 Inspired by http://cm.cdn.fm/fakeup/dow-make/cmweb/entry_assets/MAKE18_Garduino_brnd.pdf
 
+2013-10 Re-make of GUI using d3
 2013-04 First version operational during springbreak vacation  
 2013-05 Second version under test (Arduino sw r0.47 is stable, r0.5 introduces mode, )  
 
@@ -70,8 +71,8 @@ http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles
     sudo /etc/init.d/motion stop
     du -h /tmp/motion/
 
-Uploading image files. Trying out the 'requests' module for Python.   
-http://docs.python-requests.org/en/latest/
+Uploading image files. The 'requests' library for Python is really convenient.   
+Alternative 1 is to follow http://docs.python-requests.org/en/latest/
 
     curl -OL https://github.com/kennethreitz/requests/tarball/master
     python setup.py install
@@ -80,6 +81,18 @@ http://docs.python-requests.org/en/latest/
     tar xf requests.tar
     cd kennethreitz-requests-3bb13f8/
     sudo python setup.py install
+
+Alternative 2 is to install the requests library using pip. So first step is to get pip:
+
+    sudo apt-get install python-dev
+    curl -O http://python-distribute.org/distribute_setup.py
+    sudo python distribute_setup.py
+    curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    sudo python get-pip.py
+    
+And then install requests
+
+    sudo pip install requests
 
 Python code to POST image file
 
@@ -131,6 +144,8 @@ Compile the .ino file in the directory and upload to Arduino
 
 ### Send/receive data between Arduino and R-Pi Python via Serial
 Install pySerial from http://pyserial.sourceforge.net/
+Sometimes there is a problem with device turning up as /dev/ttyACM1 instead of 0
+There is new version now, 2.7, have to try it.
 
     tar xf pyserial-2.6.tar 
     cd pyserial-2.6
@@ -165,32 +180,7 @@ and copy Time folder to /usr/share/arduino/libraries
 
 ### Posting data to web server.
 
-    #!/usr/bin/python
-    import time
-    from time import localtime
-    import httplib, urllib, socket
-    import serial
-    ser = serial.Serial('/dev/ttyACM0', 9600)
-
-    while 1:
-        time_now = localtime()
-        hour = time_now.tm_hour
-        minute = time_now.tm_min
-        second = time_now.tm_sec
-        string = str(hour) + ":" + str(minute) + ":" + str(second) + ser.readline()
-        
-        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        try:
-           conn = httplib.HTTPConnection("ec2-your-server.compute-1.amazonaws.com:8000")
-           conn.request("GET", "/test-page?name=" + string)
-           response = conn.getresponse()
-    # print response.status, response.reason
-           data = response.read()
-           conn.close()
-        except (httplib.HTTPException, socket.error) as ex:
-           print "Error: %s" % ex        
-    # print '%s'%(string)
-        time.sleep(25)
+See code data_post.py above
 
 ## Arduino sketch for water pump control
 Using the Relay Shield: http://seeedstudio.com/wiki/Relay_Shield_V2.0  
