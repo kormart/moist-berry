@@ -11,7 +11,7 @@ def getLatestStatus():
     return status
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
-mode = "7"
+mode = '7'
 
 while 1:
     ser.write(mode)
@@ -26,7 +26,8 @@ while 1:
     try:
        url = "http://backabo.net:8000/test-page?name=" + string
        response = requests.get(url)
-       mode = response.text
+       mode = str(response.text)
+       print mode
     except (requests.ConnectionError) as ex:
        print "Error: %s" % ex
 #    print '%s:%s'%(string, string2)
