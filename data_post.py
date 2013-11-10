@@ -27,7 +27,6 @@ while 1:
        url = "http://backabo.net:8000/test-page?name=" + string
        response = requests.get(url)
        mode = str(response.text)
-       print mode
     except (requests.ConnectionError) as ex:
        print "Error: %s" % ex
 #    print '%s:%s'%(string, string2)
