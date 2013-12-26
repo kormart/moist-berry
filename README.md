@@ -49,6 +49,14 @@ Following http://elinux.org/RPi_Easy_SD_Card_Setup
     sudo /etc/init.d/ssh restart
     sudo reboot
 
+### Install pip tool, for installing Python libraries, such as pyserial 2.7 and requests:
+
+    sudo apt-get install python-dev
+    curl -O http://python-distribute.org/distribute_setup.py
+    sudo python distribute_setup.py
+    curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    sudo python get-pip.py
+
 ### Raspberry Pi Webcam server
 This camera works very well: Microsoft LifeCam Cinema 720p HD Webcam - Black   
 I have problems with the Motion software, trying fswebcam instead
@@ -71,7 +79,8 @@ http://www.lavrsen.dk/foswiki/bin/view/Motion/DownloadFiles
     sudo /etc/init.d/motion stop
     du -h /tmp/motion/
 
-Uploading image files. The 'requests' library for Python is really convenient.   
+### Uploading image files
+The 'requests' library for Python is really convenient.   
 Alternative 1 is to follow http://docs.python-requests.org/en/latest/
 
     curl -OL https://github.com/kennethreitz/requests/tarball/master
@@ -82,15 +91,7 @@ Alternative 1 is to follow http://docs.python-requests.org/en/latest/
     cd kennethreitz-requests-3bb13f8/
     sudo python setup.py install
 
-Alternative 2 is to install the requests library using pip. So first step is to get pip:
-
-    sudo apt-get install python-dev
-    curl -O http://python-distribute.org/distribute_setup.py
-    sudo python distribute_setup.py
-    curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-    sudo python get-pip.py
-    
-And then install requests
+Alternative 2 is to install the requests library using pip. 
 
     sudo pip install requests
 
