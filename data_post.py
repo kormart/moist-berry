@@ -21,7 +21,7 @@ while 1:
     hour = time_now.tm_hour
     minute = time_now.tm_min
     second = time_now.tm_sec
-    string = str(day) + "." + str(hour).zfill(2) + "." + str(minute).zfill(2) + "." + str(second).zfill(2) + ":" + getLatestStatus()
+    string = str(day).zfill(3) + "." + str(hour).zfill(2) + "." + str(minute).zfill(2) + "." + str(second).zfill(2) + ":" + getLatestStatus()
 
     try:
        url = "http://backabo.net:8000/test-page?name=" + string
