@@ -158,7 +158,7 @@ function diagram_moist(last, every) {
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
-          d.m0 = +d.m0;
+//          d.m0 = +d.m0;
           d.m1 = +d.m1;
       });
 
@@ -357,20 +357,20 @@ function diagram_temp(last, every) {
       <p> <button type="button" class="btn btn-primary">7</button> </p>
     </div>
     <div class="span10">
-      <p>
+<!--      <p>
       <img src="images/lastsnap.jpg" width=500>
-      </p> 
+      </p>  -->
       <div id="area1">
         <h2> Moisture </h2>
         <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_moist(4000, 200); </script>
+        <script> diagram_moist(6000, 200); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
         <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_temp(4000, 200); </script>
+        <script> diagram_temp(6000, 200); </script>
       </div>
     </div>
   </div>

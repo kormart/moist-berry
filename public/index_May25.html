@@ -108,11 +108,6 @@ function diagram_moist(last, every) {
         .x(function(d) { return x(d.time); })
         .y(function(d) { return y(d.m0); });
 
-    var line2 = d3.svg.line()
-        .interpolate("basis")
-        .x(function(d) { return x(d.time); })
-        .y(function(d) { return y(d.m1); });
-
     var svg = d3.select("#area1").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -124,11 +119,10 @@ function diagram_moist(last, every) {
       data.forEach(function(d) {
         d.time = parseDate(d.time);
         d.m0 = +d.m0;
-        d.m1 = +d.m1;
       });
 
       x.domain(d3.extent(data, function(d) { return d.time; }));
-      y.domain(d3.extent(data, function(d) { return Math.max(d.m0, d.m1); }));
+      y.domain(d3.extent(data, function(d) { return d.m0; }));
       svg.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -142,39 +136,34 @@ function diagram_moist(last, every) {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("");
-      line2 = svg.append("g")
-          .attr("class", "line2")
-          .append("path")
+      svg.append("path")
+          .datum(data)
           .attr("class", "line")
-          .style("stroke-dasharray", ("3, 3"))
-          .attr("d", line2(data));
+          .attr("d", line);
     });
 
     document.getElementById('moist_one_day').onclick = function() {
     var last=2800;
-    var every=70;
+    var every=140;
     // Get the data again
     var url = "data?last=" + last.toString() + "&every=" + every.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
           d.m0 = +d.m0;
-          d.m1 = +d.m1;
       });
 
     // Scale the range of the data again 
     x.domain(d3.extent(data, function(d) { return d.time; }));
-    y.domain(d3.extent(data, function(d) { return Math.max(d.m0, d.m1); }));
+    // y.domain(d3.extent(data, function(d) { return d.m0; }));
 
     // Select the section we want to apply our changes to
     var svg = d3.select("#area1").transition();
 
     // Make the changes
-    svg.select(".line2")
-        .select(".line")   // change the line
+    svg.select(".line")   // change the line
         .duration(750)
-        .style("stroke-dasharray", ("3, 3"))
-        .attr("d", line2(data));
+        .attr("d", line(data));
     svg.select(".x.axis") // change the x axis
         .duration(750)
         .call(xAxis);
@@ -194,7 +183,6 @@ function diagram_moist(last, every) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
           d.m0 = +d.m0;
-          d.m1 = +d.m1;
       });
 
       // Scale the range of the data again 
@@ -205,10 +193,9 @@ function diagram_moist(last, every) {
       var svg = d3.select("#area1").transition();
 
       // Make the changes
-    svg.select(".line2")
-        .select(".line")   // change the line
-        .duration(750)
-        .attr("d", line2(data));
+      svg.select(".line")   // change the line
+          .duration(750)
+          .attr("d", line(data));
       svg.select(".x.axis") // change the x axis
           .duration(750)
           .call(xAxis);
@@ -357,20 +344,20 @@ function diagram_temp(last, every) {
       <p> <button type="button" class="btn btn-primary">7</button> </p>
     </div>
     <div class="span10">
-      <p>
+<!--      <p>
       <img src="images/lastsnap.jpg" width=500>
-      </p> 
+      </p>  -->
       <div id="area1">
         <h2> Moisture </h2>
         <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_moist(4000, 200); </script>
+        <script> diagram_moist(6000, 200); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
         <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_temp(4000, 200); </script>
+        <script> diagram_temp(6000, 200); </script>
       </div>
     </div>
   </div>
