@@ -172,6 +172,10 @@ function diagram_moist(last, every) {
     var svg = d3.select("#area1").transition();
 
     // Make the changes
+    svg.select(".line1")
+//        .select(".line")   // change the line
+        .duration(750)
+        .attr("d", line1(data));
     svg.select(".line2")
 //        .select(".line")   // change the line
         .duration(750)
@@ -207,8 +211,12 @@ function diagram_moist(last, every) {
       var svg = d3.select("#area1").transition();
 
       // Make the changes
+    svg.select(".line1")
+//        .select(".line")   // change the line
+        .duration(750)
+        .attr("d", line1(data));
     svg.select(".line2")
-        .select(".line")   // change the line
+//        .select(".line")   // change the line
         .duration(750)
         .attr("d", line2(data));
       svg.select(".x.axis") // change the x axis
