@@ -146,7 +146,7 @@ function diagram_moist(last, every) {
           .attr("class", "line1")
           .append("path")
           .attr("class", "line")
-          .style("stroke-dasharray", ("3, 3"))
+          .style("stroke", ("3, 3"))
           .attr("d", line1(data));
       line2 = svg.append("g")
           .attr("class", "line2")
@@ -370,13 +370,13 @@ function diagram_temp(last, every) {
         <h2> Moisture </h2>
         <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_moist(4000, 200); </script>
+        <script> diagram_moist(6000, 200); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
         <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_temp(4000, 200); </script>
+        <script> diagram_temp(6000, 200); </script>
       </div>
     </div>
   </div>
