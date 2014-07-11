@@ -142,16 +142,12 @@ function diagram_moist(last, every) {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("");
-      line1 = svg.append("g")
+      line1 = svg.append("path")
           .attr("class", "line1")
-          .append("path")
-          .attr("class", "line")
           .style("stroke", ("3, 3"))
           .attr("d", line1(data));
-      line2 = svg.append("g")
+      line2 = svg.append("path")
           .attr("class", "line2")
-          .append("path")
-          .attr("class", "line")
           .style("stroke-dasharray", ("3, 3"))
           .attr("d", line2(data));
     });
