@@ -152,7 +152,7 @@ function diagram_moist(last, every) {
 
     document.getElementById('moist_one_day').onclick = function() {
     var last=2800;
-    var every=70;
+    var every=140;
     // Get the data again
     var url = "data?last=" + last.toString() + "&every=" + every.toString();
     d3.json(url, function(error, data) {
