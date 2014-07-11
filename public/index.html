@@ -281,9 +281,8 @@ function diagram_temp(last, every) {
           .style("text-anchor", "end")
           .text("");
       svg.append("path")
-          .datum(data)
           .attr("class", "line")
-          .attr("d", line);
+          .attr("d", line(data));
     });
 
     document.getElementById('temp_one_day').onclick = function() {
