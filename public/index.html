@@ -142,12 +142,16 @@ function diagram_moist(last, every) {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("");
-      svg.append("path")
+      svg.append("g")
           .attr("class", "line1")
+          .append("path")
+          .attr("class", "line")
           .style("stroke", ("3, 3"))
           .attr("d", line1(data));
-      svg.append("path")
-          .attr("class", "line2")
+      svg.append("g")
+          .attr("class","line2")
+          .append("path")
+          .attr("class", "line")
           .style("stroke-dasharray", ("3, 3"))
           .attr("d", line2(data));
     });
@@ -173,11 +177,11 @@ function diagram_moist(last, every) {
 
     // Make the changes
     svg.select(".line1")
-//        .select(".line")   // change the line
+        .select(".line")   // change the line
         .duration(750)
         .attr("d", line1(data));
     svg.select(".line2")
-//        .select(".line")   // change the line
+        .select(".line")   // change the line
         .duration(750)
         .style("stroke-dasharray", ("3, 3"))
         .attr("d", line2(data));
@@ -192,7 +196,7 @@ function diagram_moist(last, every) {
  } // End of onclick one_day
 
   document.getElementById('moist_one_week').onclick = function() {
-    var last=6000;
+    var last=8000;
     var every=200;
     // Get the data again
     var url = "data?last=" + last.toString() + "&every=" + every.toString();
@@ -322,7 +326,7 @@ function diagram_temp(last, every) {
  } // End of onclick one_day
 
   document.getElementById('temp_one_week').onclick = function() {
-    var last=6000;
+    var last=8000;
     var every=200;
     // Get the data again
     var url = "data?last=" + last.toString() + "&every=" + every.toString();
@@ -373,13 +377,13 @@ function diagram_temp(last, every) {
         <h2> Moisture </h2>
         <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_moist(6000, 200); </script>
+        <script> diagram_moist(8000, 200); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
         <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_temp(6000, 200); </script>
+        <script> diagram_temp(8000, 200); </script>
       </div>
     </div>
   </div>
