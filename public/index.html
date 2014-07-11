@@ -142,11 +142,11 @@ function diagram_moist(last, every) {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("");
-      line1 = svg.append("path")
+      svg.append("path")
           .attr("class", "line1")
           .style("stroke", ("3, 3"))
           .attr("d", line1(data));
-      line2 = svg.append("path")
+      svg.append("path")
           .attr("class", "line2")
           .style("stroke-dasharray", ("3, 3"))
           .attr("d", line2(data));
@@ -175,7 +175,7 @@ function diagram_moist(last, every) {
     svg.select(".line2")
 //        .select(".line")   // change the line
         .duration(750)
-//        .style("stroke-dasharray", ("3, 3"))
+        .style("stroke-dasharray", ("3, 3"))
         .attr("d", line2(data));
     svg.select(".x.axis") // change the x axis
         .duration(750)
