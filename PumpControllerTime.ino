@@ -17,6 +17,8 @@ const int pump0DelayTime = 25;
 const int pump1StartHour = 0;
 const int pump1StartMinute = 2;
 const int pump1OnMinutes = 8;
+const int tinyTickMilliSeconds = 1000;
+const int bigTick = 120;
 
 int levelState0 = 0;  // value read from level switch 0
 int levelState1 = 0;  // value read from level switch 1
@@ -34,6 +36,11 @@ int pump0On = 0;
 int pump1On = 0;
 int pump0DelayFlag = 0;
 int pump0DiffTime = 0;
+
+int tinyTick = 0;
+int moist0Average = 0;
+int moist1Average = 0;
+int tempAverage = 0;
 
 char mode = '7';
 
@@ -58,27 +65,43 @@ void loop() {
   // change the analog out value:
   // analogWrite(analogOutPin, outputValue);           
 
-  if (Serial.available() > 0) {
-    mode = (char)Serial.read();
+  tinyTick++;
+
+  // collect averages
+  moist0Average += moist0Value;
+  moist1Average += moist1Value;
+  tempAverage += tempValue;
+
+  // only perform serial every bigTick
+  if (tinyTick == bigTick) {
+    tinyTick = 0;
+
+    if (Serial.available() > 0) {
+      mode = (char)Serial.read();
+    }
+
+    // print time to serial
+    Serial.print(hour());
+    Serial.print(".");
+    Serial.print(minute());
+    Serial.print(".");
+    Serial.print(now());
+    Serial.print(":");
+
+    // print the results to the serial monitor:
+    Serial.print(moist0Average/bigTick);
+    Serial.print(":");      
+    Serial.print(moist1Average/bigTick);
+    Serial.print(":");      
+    Serial.print(tempAverage/bigTick);   
+    Serial.print(":");      
+    Serial.print(mode);   
+    Serial.println(":r0.6");
+
+    moist0Average = 0;
+    moist1Average = 0;
+    tempAverage = 0;
   }
-
-  // print time to serial
-  Serial.print(hour());
-  Serial.print(".");
-  Serial.print(minute());
-  Serial.print(".");
-  Serial.print(now());
-  Serial.print(":");
-
-  // print the results to the serial monitor:
-  Serial.print(moist0Value);
-  Serial.print(":");      
-  Serial.print(moist1Value);
-  Serial.print(":");      
-  Serial.print(tempValue);   
-  Serial.print(":");      
-  Serial.print(mode);   
-  Serial.println(":r0.5");
 
   // Control block for Pump 0
 /*  pump0On = 0;
@@ -139,6 +162,6 @@ void loop() {
   // Quick fix by changing from relay2Pin above to control Pump 0 instead
   }
 
-  // wait a while
-  delay(500);   
+  // wait a while, milliseconds
+  delay(tinyTickMilliSeconds);   
 }
