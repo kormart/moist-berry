@@ -17,11 +17,13 @@ while 1:
     ser.write(mode)
     time.sleep(2)
     time_now = localtime()
-    day = time_now.tm_yday
+    year = time_now.tm_year
+    month = time_now.tm_mon
+    day = time_now.tm_mday
     hour = time_now.tm_hour
     minute = time_now.tm_min
     second = time_now.tm_sec
-    string = str(day).zfill(3) + "." + str(hour).zfill(2) + "." + str(minute).zfill(2) + "." + str(second).zfill(2) + ":" + getLatestStatus()
+    string = str(year).zfill(4) + "." + str(month).zfill(2) + "." + str(day).zfill(2) + "." + str(hour).zfill(2) + "." + str(minute).zfill(2) + "." + str(second).zfill(2) + ":" + getLatestStatus()
 
     try:
        url = "http://backabo.net:8000/test-page?name=" + string
@@ -30,5 +32,5 @@ while 1:
     except (requests.ConnectionError) as ex:
        print "Error: %s" % ex
 #    print '%s:%s'%(string, string2)
-    time.sleep(58)
+    time.sleep(358)
    
