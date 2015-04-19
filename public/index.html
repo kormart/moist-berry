@@ -82,12 +82,12 @@ src="/img/top-nav-logo.png" width="130"></a>
 </div>
 <script>
 
-function diagram_moist(last, every) {
+function diagram_moist(days) {
     var margin = {top: 20, right: 20, bottom: 30, left: 180},
         width = 700 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
-    var parseDate = d3.time.format("%j.%H.%M.%S").parse;
+    var parseDate = d3.time.format("%Y.%m.%d.%H.%M.%S").parse;
 
     var x = d3.time.scale()
         .range([0, width]);
@@ -119,7 +119,7 @@ function diagram_moist(last, every) {
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
         d.time = parseDate(d.time);
@@ -128,7 +128,10 @@ function diagram_moist(last, every) {
       });
 
       x.domain(d3.extent(data, function(d) { return d.time; }));
-      y.domain(d3.extent(data, function(d) { return Math.max(d.m0, d.m1); }));
+      range_m0 = d3.extent(data, function(d) {return d.m0;});
+      range_m1 = d3.extent(data, function(d) {return d.m1;});
+      y.domain([ Math.min(range_m0[0], range_m1[0]), Math.max(range_m0[1], range_m1[1])] );
+      // y.domain([d3.min(data.m0), d3.max(data.m1) ]);
       svg.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -157,10 +160,10 @@ function diagram_moist(last, every) {
     });
 
     document.getElementById('moist_one_day').onclick = function() {
-    var last=2800;
-    var every=140;
+    var days=1;
+    // var every=140;
     // Get the data again
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
@@ -170,7 +173,9 @@ function diagram_moist(last, every) {
 
     // Scale the range of the data again 
     x.domain(d3.extent(data, function(d) { return d.time; }));
-    y.domain(d3.extent(data, function(d) { return Math.max(d.m0, d.m1); }));
+      range_m0 = d3.extent(data, function(d) {return d.m0;});
+      range_m1 = d3.extent(data, function(d) {return d.m1;});
+      y.domain([ Math.min(range_m0[0], range_m1[0]), Math.max(range_m0[1], range_m1[1])] );
 
     // Select the section we want to apply our changes to
     var svg = d3.select("#area1").transition();
@@ -196,10 +201,10 @@ function diagram_moist(last, every) {
  } // End of onclick one_day
 
   document.getElementById('moist_one_week').onclick = function() {
-    var last=8000;
-    var every=200;
+    var days=7;
+    // var every=200;
     // Get the data again
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
@@ -209,6 +214,9 @@ function diagram_moist(last, every) {
 
       // Scale the range of the data again 
       x.domain(d3.extent(data, function(d) { return d.time; }));
+      range_m0 = d3.extent(data, function(d) {return d.m0;});
+      range_m1 = d3.extent(data, function(d) {return d.m1;});
+      y.domain([ Math.min(range_m0[0], range_m1[0]), Math.max(range_m0[1], range_m1[1])] );
       // y.domain(d3.extent(data, function(d) { return d.m0; }));
 
       // Select the section we want to apply our changes to
@@ -234,12 +242,12 @@ function diagram_moist(last, every) {
   } // End of onclick one_week
 } // End of diagram_moist
 
-function diagram_temp(last, every) {
+function diagram_temp(days) {
     var margin = {top: 20, right: 20, bottom: 30, left: 180},
         width = 700 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
-    var parseDate = d3.time.format("%j.%H.%M.%S").parse;
+    var parseDate = d3.time.format("%Y.%m.%d.%H.%M.%S").parse;
 
     var x = d3.time.scale()
         .range([0, width]);
@@ -266,7 +274,7 @@ function diagram_temp(last, every) {
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
         d.time = parseDate(d.time);
@@ -294,10 +302,10 @@ function diagram_temp(last, every) {
     });
 
     document.getElementById('temp_one_day').onclick = function() {
-    var last=2800;
-    var every=140;
+    var days=1;
+    // var every=140;
     // Get the data again
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
@@ -326,10 +334,10 @@ function diagram_temp(last, every) {
  } // End of onclick one_day
 
   document.getElementById('temp_one_week').onclick = function() {
-    var last=8000;
-    var every=200;
+    var days=7;
+    // var every=200;
     // Get the data again
-    var url = "data?last=" + last.toString() + "&every=" + every.toString();
+    var url = "data?days=" + days.toString();
     d3.json(url, function(error, data) {
       data.forEach(function(d) {
           d.time = parseDate(d.time);
@@ -375,15 +383,16 @@ function diagram_temp(last, every) {
       </p> 
       <div id="area1">
         <h2> Moisture </h2>
+        <p>Solid line = at soil surface, broken line = 2 inch below surface </p>
         <button id="moist_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="moist_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_moist(8000, 200); </script>
+        <script> diagram_moist(1); </script>
       </div>
       <div id="area2">
         <h2> Temperature </h2>
         <button id="temp_one_day" type="button" class="pull-left btn btn-primary">Display 1 day</button> </p>
         <button id="temp_one_week" type="button" class="btn btn-primary">Display 1 week</button> </p>
-        <script> diagram_temp(8000, 200); </script>
+        <script> diagram_temp(1); </script>
       </div>
     </div>
   </div>
